@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحلة اللقمة | الجهاز الهضمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF8F1; --ink:#1E3448; --muted:#66788A; --line:#EFE4D8;
+  --coral:#EE6352; --coral-l:#FDE4DF; --mint:#1FA394; --mint-l:#D9F3EF;
+  --sun:#F5B52E; --sun-l:#FFF1CC; --plum:#7357A6; --plum-l:#ECE6F7; --tint:#FDE4DF;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#16222E;overflow:hidden;font-family:'Tajawal','IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;background:var(--bg);transform-origin:center;overflow:hidden;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+button{font-family:inherit}
+.slide{position:absolute;inset:0 0 64px 0;padding:30px 56px 18px;opacity:0;visibility:hidden;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease,visibility .45s}
+.slide.active{opacity:1;visibility:visible;transform:none}
+
+/* icons */
+.ic{display:inline-block;width:24px;height:24px;flex:none;line-height:0}
+.icn{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.icn .t{fill:var(--tint)}
+.icn .tk{stroke:var(--tint);stroke-width:8}
+.icn .f{fill:currentColor;stroke:none}
+
+/* header */
+.s-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.s-head .badge{width:54px;height:54px;border-radius:16px;background:var(--coral-l);color:var(--coral);padding:9px;--tint:#fff}
+.kicker{font-size:15px;color:var(--coral);font-weight:800;letter-spacing:.2px}
+h2{margin:0;font-size:33px;font-weight:900;line-height:1.2}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 2px 0 var(--line),0 12px 30px rgba(30,52,72,.06)}
+
+/* buttons */
+.btn{border:0;border-radius:14px;padding:11px 20px;font-size:18px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;transition:transform .15s,box-shadow .15s,opacity .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn .ic{width:22px;height:22px}
+.btn.coral{background:var(--coral);box-shadow:0 6px 0 #C94A3B}
+.btn.mint{background:var(--mint);box-shadow:0 6px 0 #147A6E}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.big{font-size:22px;padding:15px 28px;border-radius:18px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+/* nav */
+#nav{position:absolute;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;gap:18px;padding:0 26px;background:#FFFDF9;border-top:1px solid var(--line);z-index:5}
+#navTitle{font-weight:800;font-size:16px;color:var(--muted);min-width:230px}
+#dots{flex:1;display:flex;justify-content:center;gap:8px}
+#dots button{width:12px;height:12px;border-radius:99px;border:0;background:#E3D7CA;cursor:pointer;padding:0;transition:all .3s}
+#dots button.on{width:34px;background:var(--coral)}
+#dots button.seen{background:#F3B3A9}
+.nbtn{width:44px;height:44px;border-radius:12px;border:2px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;padding:9px;display:grid;place-items:center}
+.nbtn:hover{border-color:var(--coral);color:var(--coral)}
+#counter{font-weight:800;color:var(--muted);font-size:16px;min-width:60px;text-align:center}
+
+/* cover */
+.cover-grid{display:grid;grid-template-columns:1fr 560px;align-items:center;height:100%;gap:20px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--mint-l);color:#127A6F;font-weight:800;padding:8px 16px;border-radius:99px;font-size:17px}
+.pill .ic{width:22px;height:22px;--tint:#fff}
+.cover h1{font-size:96px;line-height:1.05;margin:18px 0 12px;font-weight:900}
+.cover h1 .hl{color:var(--coral);position:relative}
+.cover h1 .hl::after{content:"";position:absolute;right:0;left:0;bottom:6px;height:16px;background:var(--sun);opacity:.35;border-radius:8px;z-index:-1}
+.lead{font-size:24px;color:var(--muted);line-height:1.6;margin:0 0 26px;max-width:540px;font-weight:500}
+.cover-meta{display:flex;gap:16px;margin-bottom:30px}
+.cover-meta>div{background:#fff;border:1px dashed #E3CDBA;border-radius:14px;padding:8px 16px;min-width:180px}
+.cover-meta small{display:block;color:var(--muted);font-size:14px;font-weight:700}
+.cover-meta b{font-size:19px;outline:none}
+#coverArt svg{width:560px;height:560px}
+
+/* hook */
+.hook-q{font-size:26px;color:var(--muted);margin:-4px 0 22px;font-weight:500}
+.hook-card{padding:30px 40px}
+.guess-row{display:flex;align-items:center;gap:24px;margin-bottom:34px}
+.guess-row label{font-size:22px;font-weight:800;white-space:nowrap}
+input[type=range]{flex:1;accent-color:var(--coral);height:28px;cursor:pointer}
+.guess-val{background:var(--coral-l);color:var(--coral);font-weight:900;font-size:30px;border-radius:14px;padding:6px 18px;min-width:130px;text-align:center}
+.ruler{position:relative;height:110px;margin:0 10px}
+.ruler .base{position:absolute;right:0;left:0;top:44px;height:16px;background:#F3EAE0;border-radius:99px}
+.ruler .ans{position:absolute;right:0;top:44px;height:16px;width:0;background:linear-gradient(270deg,var(--mint),#46C2B3);border-radius:99px;transition:width 1.6s cubic-bezier(.3,.8,.3,1)}
+.ruler .tick{position:absolute;top:66px;transform:translateX(50%);font-size:15px;color:var(--muted);font-weight:700;white-space:nowrap}
+.ruler .tick::before{content:"";position:absolute;top:-8px;right:50%;width:2px;height:6px;background:#D9C9B8}
+.ruler .gmark{position:absolute;top:0;transform:translateX(50%);display:flex;flex-direction:column;align-items:center;transition:right .2s}
+.ruler .gmark span{background:var(--coral);color:#fff;font-weight:800;font-size:14px;padding:3px 10px;border-radius:8px}
+.ruler .gmark i{width:3px;height:22px;background:var(--coral);display:block}
+.ruler .amark{position:absolute;top:84px;transform:translateX(50%);opacity:0;transition:opacity .5s 1.4s;font-weight:900;color:var(--mint);font-size:18px;white-space:nowrap}
+.hook-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:6px;min-height:92px}
+.reveal-box{display:flex;align-items:center;gap:18px;opacity:0;transform:translateY(8px);transition:.5s .9s}
+.reveal-box.show{opacity:1;transform:none}
+.reveal-box p{margin:0;font-size:22px;line-height:1.5;font-weight:700}
+.reveal-box p b{color:var(--mint)}
+.girls{display:flex;gap:2px}
+.girls .ic{width:44px;height:44px;color:var(--ink);--tint:var(--sun-l);transform:rotate(-90deg)}
+
+/* objectives */
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.obj{display:flex;gap:18px;align-items:center;padding:22px 24px}
+.obj .num{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;padding:12px;flex:none}
+.obj p{margin:0;font-size:23px;font-weight:700;line-height:1.5}
+.nafis{margin-top:20px;display:flex;align-items:center;gap:18px;padding:18px 24px;background:var(--ink);color:#fff;border-radius:20px}
+.nafis .ic{width:46px;height:46px;color:var(--sun);--tint:rgba(245,181,46,.18)}
+.nafis p{margin:0;font-size:20px;font-weight:600;line-height:1.6}
+.lvl{display:inline-block;padding:3px 12px;border-radius:99px;font-weight:800;font-size:16px;margin:0 3px}
+.lvl.k{background:var(--mint);color:#fff}.lvl.a{background:var(--sun);color:var(--ink)}.lvl.r{background:var(--coral);color:#fff}
+
+/* types */
+.types{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.type{padding:22px 26px;display:flex;flex-direction:column}
+.type-h{display:flex;align-items:center;gap:14px}
+.type-h .ic{width:58px;height:58px;padding:10px;border-radius:16px}
+.type h3{margin:0;font-size:30px;font-weight:900}
+.type .def{font-size:21px;line-height:1.55;margin:12px 0 8px;font-weight:600}
+.demo{background:#FFFAF4;border:1px dashed #EAD8C6;border-radius:18px;height:170px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin:6px 0 12px;overflow:hidden}
+.demo svg{width:270px;height:150px;flex:none}
+.demo .lab{font-size:16px;font-weight:800;color:var(--muted);text-align:center;width:100px;line-height:1.5;flex:none}
+.ex{display:flex;gap:10px;flex-wrap:wrap}
+.ex span{font-size:17px;font-weight:700;padding:6px 14px;border-radius:99px}
+.mech .ex span{background:var(--plum-l);color:var(--plum)}
+.chem .ex span{background:var(--mint-l);color:#127A6F}
+.demo-row{display:flex;align-items:center;gap:12px;margin-top:4px}
+.mpiece{transition:transform .8s cubic-bezier(.3,1.4,.5,1);transform-box:fill-box;transform-origin:center}
+.demo-m.on .p1{transform:translate(-26px,-16px) rotate(-12deg)}
+.demo-m.on .p2{transform:translate(26px,-14px) rotate(10deg)}
+.demo-m.on .p3{transform:translate(-22px,16px) rotate(8deg)}
+.demo-m.on .p4{transform:translate(24px,18px) rotate(-9deg)}
+.bead{transition:transform .9s cubic-bezier(.3,1.3,.5,1),fill .6s .3s}
+.link{transition:opacity .4s .2s}
+.demo-c.on .link{opacity:0}
+.demo-c.on .bead{fill:var(--sun)}
+.enz{transition:transform 1.1s ease-in-out}
+.demo-c.on .enz{transform:translateX(-250px)}
+
+/* journey */
+.journey{display:grid;grid-template-columns:372px 1fr;gap:22px;height:540px}
+.j-body{padding:8px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#FFF6EE)}
+.j-body .body-svg{height:520px;width:auto}
+.j-side{display:flex;flex-direction:column;gap:12px;min-width:0}
+.j-steps{display:flex;gap:6px}
+.j-steps button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 4px;font-weight:800;font-size:15px;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.25s}
+.j-steps button .n{width:22px;height:22px;border-radius:99px;background:#F1E7DC;display:grid;place-items:center;font-size:13px}
+.j-steps button.done{border-color:#F3C0B7;color:var(--coral)}
+.j-steps button.done .n{background:var(--coral-l)}
+.j-steps button.on{background:var(--coral);border-color:var(--coral);color:#fff}
+.j-steps button.on .n{background:#fff;color:var(--coral)}
+.j-panel{flex:1;padding:18px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.j-panel>*{animation:pin .45s both}
+@keyframes pin{from{opacity:0;transform:translateY(8px)}}
+.jp-head{display:flex;align-items:center;gap:14px}
+.jp-ic{width:60px;height:60px;border-radius:18px;padding:10px;background:var(--coral-l);color:var(--coral);--tint:#fff;flex:none}
+.jp-num{font-size:14px;font-weight:800;color:var(--coral)}
+.jp-head h3{margin:0;font-size:30px;font-weight:900}
+.jp-food{margin-inline-start:auto;text-align:center;background:var(--sun-l);border-radius:14px;padding:6px 14px}
+.jp-food small{display:block;font-size:13px;font-weight:700;color:#8A6205}
+.jp-food b{font-size:19px}
+.jp-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.jp-list li{position:relative;padding-inline-start:22px;font-size:19.5px;line-height:1.5;font-weight:600}
+.jp-list li::before{content:"";position:absolute;right:2px;top:12px;width:10px;height:10px;border-radius:3px;background:var(--coral);transform:rotate(45deg)}
+.jp-tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:15.5px;font-weight:800;background:#F4EFE9;color:#A9B2BA;--tint:transparent}
+.tag .ic{width:20px;height:20px}
+.tag.m-on{background:var(--plum-l);color:var(--plum);--tint:#fff}
+.tag.c-on{background:var(--mint-l);color:#127A6F;--tint:#fff}
+.tag.info{background:var(--sun-l);color:#7A5704;--tint:#fff}
+.tag.proc{background:var(--ink);color:#fff;--tint:rgba(255,255,255,.2)}
+.jp-bottom{display:grid;grid-template-columns:1fr 1.15fr;gap:12px;margin-top:auto}
+.jp-fact{background:#F2F8FF;border-radius:16px;padding:12px 14px;display:flex;gap:10px;font-size:16.5px;line-height:1.55;font-weight:600;color:#26486A}
+.jp-fact .ic{width:34px;height:34px;color:#3D7FC1;--tint:#DCEBFA}
+.jp-fact b{display:block;color:#3D7FC1}
+.jp-q{background:#FFF7EE;border-radius:16px;padding:12px 14px;border:1px dashed #EBCFB7}
+.jp-q .qt{display:flex;gap:8px;align-items:center;font-weight:800;font-size:16.5px;margin-bottom:8px}
+.jp-q .qt .ic{width:26px;height:26px;color:var(--coral)}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{border:2px solid var(--line);background:#fff;border-radius:11px;padding:6px 12px;font-size:15.5px;font-weight:700;cursor:pointer;color:var(--ink);transition:.2s}
+.opt:hover{border-color:var(--coral)}
+.opt.ok{background:var(--mint);border-color:var(--mint);color:#fff}
+.opt.no{background:var(--coral-l);border-color:var(--coral);color:var(--coral);animation:shake .4s}
+.fb{font-size:15px;font-weight:800;margin-top:6px;min-height:20px}
+.fb.ok{color:var(--mint)}.fb.no{color:var(--coral)}
+.j-ctrl{display:flex;gap:10px;justify-content:space-between}
+.j-ctrl .btn.coral{flex:1;justify-content:center}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+
+/* body svg */
+.skin{fill:#FBE6D6;stroke:#E7C6AE;stroke-width:2.5}
+.org{transition:filter .4s,opacity .4s}
+.org.glow{filter:drop-shadow(0 0 5px rgba(255,186,40,1)) drop-shadow(0 0 10px rgba(255,186,40,.7))}
+#j-stomach.glow .stb{animation:churn 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes churn{50%{transform:scale(1.05,.96) rotate(-2deg)}}
+#j-eso.glow path{animation:peri 1s ease-in-out infinite}
+@keyframes peri{50%{stroke-width:16}}
+.mk{cursor:pointer}
+.mk circle{fill:#fff;stroke:var(--ink);stroke-width:2.5;transition:.3s}
+.mk text{font-size:15px;font-weight:900;fill:var(--ink);text-anchor:middle;font-family:inherit}
+.mk.done circle{fill:var(--coral-l);stroke:var(--coral)}
+.mk.on circle{fill:var(--coral);stroke:var(--coral)}
+.mk.on text{fill:#fff}
+.mk:hover circle{stroke:var(--coral)}
+
+/* accessory */
+.acc{display:grid;grid-template-columns:1fr 560px;gap:22px;height:540px}
+.acc-side{display:flex;flex-direction:column;gap:12px}
+.acc-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.acc-pick button{border:2px solid var(--line);background:#fff;border-radius:18px;padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:800;font-size:19px;color:var(--ink);transition:.25s}
+.acc-pick button .ic{width:52px;height:52px}
+.acc-pick button.sel{border-color:var(--mint);background:var(--mint-l);transform:translateY(-3px)}
+.acc-detail{flex:1;padding:22px 26px}
+.acc-detail h3{margin:0 0 8px;font-size:28px;font-weight:900;color:var(--mint)}
+.acc-detail p{margin:0 0 10px;font-size:21px;line-height:1.65;font-weight:600}
+.acc-detail .juice{display:inline-flex;align-items:center;gap:8px;background:var(--sun-l);border-radius:12px;padding:6px 14px;font-weight:800;font-size:18px;color:#7A5704}
+.acc-detail .juice .ic{width:24px;height:24px;--tint:#fff}
+.acc-note{display:flex;gap:14px;align-items:center;background:var(--ink);color:#fff;border-radius:18px;padding:14px 20px;font-size:19px;font-weight:700;line-height:1.55}
+.acc-note .ic{width:42px;height:42px;color:var(--sun);--tint:rgba(245,181,46,.2)}
+.acc-view{padding:10px;display:flex;align-items:center;justify-content:center;position:relative}
+.acc-view svg{width:540px;height:auto}
+.acc-view .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-weight:800;color:var(--muted);font-size:16px}
+#acc-svg .pick{cursor:pointer}
+#acc-svg.dim .org{opacity:.45}
+#acc-svg.dim .org.sel{opacity:1;filter:drop-shadow(0 0 4px #1FA394) drop-shadow(0 0 8px rgba(31,163,148,.6))}
+.duct{stroke-dasharray:4 5;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-18}}
+
+/* villi */
+.villi{display:grid;grid-template-columns:1fr 360px;gap:22px;height:540px}
+.v-view{padding:14px 16px;display:flex;flex-direction:column}
+.v-view svg{width:100%;height:auto}
+.v-cap{display:flex;justify-content:space-between;font-weight:800;color:var(--muted);font-size:16px;padding:0 6px}
+.v-ctrl{display:flex;flex-direction:column;gap:14px}
+.v-box{padding:18px 20px}
+.v-box h4{margin:0 0 10px;font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px}
+.v-box h4 .ic{width:26px;height:26px;color:var(--coral)}
+.ratio{font-size:52px;font-weight:900;color:var(--coral);line-height:1}
+.ratio small{font-size:18px;color:var(--muted);font-weight:700;display:block;margin-top:6px}
+.v-count{font-size:19px;font-weight:800;color:var(--mint);min-height:28px}
+.v-exp{font-size:18px;line-height:1.6;font-weight:600;margin:0}
+.pt{transition:transform .9s cubic-bezier(.4,0,.2,1),opacity .6s}
+.pt.wig{animation:wig 1.4s ease-in-out infinite}
+@keyframes wig{50%{transform:translate(3px,-4px)}}
+
+/* order */
+.slots{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:22px}
+.slot{height:150px;border:3px dashed #E6D3C1;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;background:#FFFCF8;transition:.3s}
+.slot .sn{position:absolute;top:-14px;right:50%;transform:translateX(50%);width:30px;height:30px;border-radius:99px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:900;font-size:15px}
+.slot.filled{border-style:solid;border-color:var(--mint);background:var(--mint-l);animation:pop .4s}
+.slot .ic{width:56px;height:56px;color:var(--ink);--tint:#fff}
+.slot b{font-size:18px;text-align:center}
+.slot .arr{position:absolute;left:-15px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:#D8C3AF}
+.slot:last-child .arr{display:none}
+@keyframes pop{50%{transform:scale(1.06)}}
+.cards{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-height:150px}
+.ocard{width:170px;padding:16px 10px;border:2px solid var(--line);background:#fff;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:800;font-size:19px;color:var(--ink);transition:.25s;box-shadow:0 5px 0 var(--line)}
+.ocard:hover{transform:translateY(-4px);border-color:var(--coral)}
+.ocard .ic{width:58px;height:58px;color:var(--coral);--tint:var(--coral-l)}
+.ocard.used{opacity:0;pointer-events:none;transform:scale(.8)}
+.ocard.no{animation:shake .4s;border-color:var(--coral);background:var(--coral-l)}
+.act-foot{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+.status{font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px}
+.status .ic{width:34px;height:34px}
+.status.win{color:var(--mint)}
+
+/* classify */
+.pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:118px;align-content:flex-start;margin-bottom:16px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:14px;padding:11px 18px;font-size:19px;font-weight:700;cursor:pointer;color:var(--ink);transition:.2s;box-shadow:0 4px 0 var(--line)}
+.chip:hover{border-color:var(--ink)}
+.chip.sel{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-3px)}
+.chip.no{animation:shake .4s;border-color:var(--coral)}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.bin{padding:16px 20px;min-height:250px;cursor:pointer;transition:.25s;border-width:3px}
+.bin:hover{transform:translateY(-3px)}
+.bin.m{border-color:#D9CDEE}.bin.c{border-color:#BFE7E1}
+.bin-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bin-h .ic{width:50px;height:50px;padding:8px;border-radius:14px}
+.bin.m .bin-h .ic{background:var(--plum-l);color:var(--plum);--tint:#fff}
+.bin.c .bin-h .ic{background:var(--mint-l);color:var(--mint);--tint:#fff}
+.bin-h b{font-size:25px;font-weight:900}
+.bin-h small{display:block;font-size:15px;color:var(--muted);font-weight:700}
+.bin-list{display:flex;flex-direction:column;gap:7px}
+.bin-list div{font-size:17.5px;font-weight:700;padding:7px 12px;border-radius:10px;animation:pop .4s}
+.bin.m .bin-list div{background:var(--plum-l);color:var(--plum)}
+.bin.c .bin-list div{background:var(--mint-l);color:#127A6F}
+.bin.flash{box-shadow:0 0 0 6px rgba(31,163,148,.25)}
+
+/* quiz */
+.quiz{padding:24px 30px;height:540px;display:flex;flex-direction:column}
+.qz-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.qz-top .qn{font-weight:900;font-size:19px}
+.qz-bar{flex:1;height:10px;background:#F3EAE0;border-radius:99px;overflow:hidden}
+.qz-bar i{display:block;height:100%;background:var(--coral);border-radius:99px;transition:width .5s}
+.qz-score{font-weight:800;color:var(--mint);font-size:18px;display:flex;align-items:center;gap:6px}
+.qz-score .ic{width:24px;height:24px;color:var(--sun);--tint:var(--sun-l)}
+.qz-main{display:flex;gap:24px;flex:1;min-height:0}
+.qz-text{flex:1;display:flex;flex-direction:column}
+.qz-q{font-size:27px;font-weight:800;line-height:1.55;margin:0 0 18px}
+.qz-fig{width:230px;flex:none;background:#FFF9F2;border-radius:18px;display:flex;align-items:center;justify-content:center}
+.qz-fig svg{height:330px;width:auto}
+.qz-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qopt{display:flex;align-items:center;gap:12px;border:2px solid var(--line);background:#fff;border-radius:16px;padding:13px 16px;font-size:20px;font-weight:700;cursor:pointer;text-align:right;color:var(--ink);transition:.2s}
+.qopt:hover{border-color:var(--coral)}
+.qopt .l{width:36px;height:36px;border-radius:11px;background:#F4EDE6;display:grid;place-items:center;font-weight:900;flex:none}
+.qopt.ok{border-color:var(--mint);background:var(--mint-l)}
+.qopt.ok .l{background:var(--mint);color:#fff}
+.qopt.no{border-color:var(--coral);background:var(--coral-l);animation:shake .4s}
+.qopt.no .l{background:var(--coral);color:#fff}
+.qopts-lock .qopt{pointer-events:none}
+.qz-foot{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:14px}
+.qz-fb{flex:1;font-size:18.5px;font-weight:700;line-height:1.55;display:flex;gap:10px;align-items:flex-start;border-radius:14px;padding:10px 14px;opacity:0;transition:.3s}
+.qz-fb.show{opacity:1}
+.qz-fb.ok{background:var(--mint-l);color:#0F665C}
+.qz-fb.no{background:var(--coral-l);color:#A33A2D}
+.qz-fb .ic{width:30px;height:30px}
+.qz-res{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
+.qz-res .ic.big{width:110px;height:110px;color:var(--sun);--tint:var(--sun-l)}
+.qz-res h3{margin:0;font-size:40px;font-weight:900}
+.qz-res p{margin:0;font-size:22px;color:var(--muted);font-weight:600}
+.stars{display:flex;gap:6px}
+.stars .ic{width:46px;height:46px;color:#E0D2C3;--tint:#F3EAE0}
+.stars .ic.on{color:#D99A0E;--tint:var(--sun)}
+
+/* habits */
+.habits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;height:400px;perspective:1200px}
+.flip{position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.2,.5,1)}
+.flip.on{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;gap:14px}
+.front{background:#fff;border:1px solid var(--line);box-shadow:0 6px 0 var(--line)}
+.front .ic{width:120px;height:120px}
+.front b{font-size:25px;font-weight:900}
+.front small{color:var(--muted);font-weight:700;font-size:15px}
+.back{transform:rotateY(180deg);color:#fff}
+.back .ic{width:46px;height:46px;--tint:rgba(255,255,255,.2)}
+.back p{margin:0;font-size:21px;line-height:1.65;font-weight:700}
+.habit-tip{margin-top:20px;text-align:center;font-size:19px;font-weight:700;color:var(--muted)}
+
+/* summary */
+.flow{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 26px;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;align-items:center;gap:6px;width:140px}
+.fl .ic{width:64px;height:64px;padding:10px;border-radius:20px;background:var(--coral-l);color:var(--coral);--tint:#fff}
+.fl b{font-size:18px;text-align:center}
+.fl small{font-size:14px;color:var(--muted);font-weight:700;text-align:center}
+.fl-ar{width:30px;height:30px;color:#DCC6B2;margin-top:18px}
+.sum-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+.take{padding:20px 24px}
+.take h4,.exit h4{margin:0 0 12px;font-size:22px;font-weight:900;display:flex;align-items:center;gap:10px}
+.take h4 .ic,.exit h4 .ic{width:32px;height:32px;color:var(--coral)}
+.take ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.take li{font-size:20px;font-weight:600;line-height:1.5;padding-inline-start:30px;position:relative}
+.take li .ic{position:absolute;right:0;top:2px;width:22px;height:22px;color:var(--mint)}
+.exit{padding:20px 24px;background:var(--ink);color:#fff;border:0}
+.exit h4 .ic{color:var(--sun);--tint:rgba(245,181,46,.2)}
+.exit-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:19px;font-weight:600}
+.exit-row span{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:900;font-size:21px;flex:none}
+.exit-row:nth-of-type(1) span{background:var(--coral)}
+.exit-row:nth-of-type(2) span{background:var(--sun);color:var(--ink)}
+.exit-row:nth-of-type(3) span{background:var(--mint)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 Cover -->
+<section class="slide cover active" data-title="الغلاف">
+  <div class="cover-grid">
+    <div>
+      <span class="pill"><span class="ic" data-ic="stomach"></span>مقرر العلوم · الجهاز الهضمي</span>
+      <h1>رحلة <span class="hl">اللقمة</span></h1>
+      <p class="lead">درس تفاعلي نتتبّع فيه الطعام خطوة بخطوة، من لحظة دخوله الفم حتى خروجه من الجسم.</p>
+      <div class="cover-meta">
+        <div><small>المعلمة</small><b contenteditable="true" spellcheck="false">اكتبي الاسم هنا</b></div>
+        <div><small>الصف / الشعبة</small><b contenteditable="true" spellcheck="false">..........</b></div>
+      </div>
+      <button class="btn coral big" data-go="1">ابدئي الرحلة <span class="ic" data-ic="arrowL"></span></button>
+    </div>
+    <div id="coverArt"></div>
+  </div>
+</section>
+
+<!-- 2 Hook -->
+<section class="slide" data-title="سؤال البداية">
+  <div class="s-head"><div class="badge" data-ic="ask"></div><div><div class="kicker">سؤال البداية</div><h2>كم طول الطريق الذي تقطعه لقمتك داخل جسمك؟</h2></div></div>
+  <p class="hook-q">حرّكي المؤشر وسجّلي توقّعك لطول القناة الهضمية كاملة، ثم اكشفي الإجابة.</p>
+  <div class="card hook-card">
+    <div class="guess-row">
+      <label for="guess">توقّعي:</label>
+      <input type="range" id="guess" min="1" max="15" step="0.5" value="3">
+      <div class="guess-val" id="guessVal">٣ م</div>
+    </div>
+    <div class="ruler" id="ruler">
+      <div class="base"></div><div class="ans" id="ansBar"></div>
+      <div class="gmark" id="gmark"><span>توقّعكِ</span><i></i></div>
+      <div class="amark" id="amark" style="right:60%">الإجابة: نحو ٩ أمتار</div>
+    </div>
+    <div class="hook-foot">
+      <div class="reveal-box" id="revealBox">
+        <div class="girls" id="girls"></div>
+        <p>نحو <b>٩ أمتار!</b> أي ما يعادل طول ٦ طالبات تقريبًا<br>لو استلقين متتاليات. <span id="guessFb"></span></p>
+      </div>
+      <button class="btn mint big" id="revealBtn">اكشفي الإجابة <span class="ic" data-ic="magnifier"></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Objectives -->
+<section class="slide" data-title="أهداف الدرس">
+  <div class="s-head"><div class="badge" data-ic="target"></div><div><div class="kicker">ماذا سنتعلّم اليوم؟</div><h2>أهداف الدرس</h2></div></div>
+  <div class="obj-grid">
+    <div class="card obj"><div class="num" style="background:var(--coral-l);color:var(--coral);--tint:#fff" data-ic="order"></div><p>أتعرّف أعضاء القناة الهضمية وأرتّبها حسب مسار الطعام.</p></div>
+    <div class="card obj"><div class="num" style="background:var(--plum-l);color:var(--plum);--tint:#fff" data-ic="gear"></div><p>أميّز بين الهضم الميكانيكي والهضم الكيميائي.</p></div>
+    <div class="card obj"><div class="num" style="background:var(--sun-l);color:#B07A06;--tint:#fff" data-ic="liver"></div><p>أصف وظيفة كل عضو ودور الأعضاء المساعدة في الهضم.</p></div>
+    <div class="card obj"><div class="num" style="background:var(--mint-l);color:var(--mint);--tint:#fff" data-ic="villi"></div><p>أفسّر دور الخملات في امتصاص الغذاء المهضوم.</p></div>
+  </div>
+  <div class="nafis"><span class="ic" data-ic="star"></span><p>في نهاية الرحلة اختبار بنمط التقييم الخارجي يقيس ثلاثة مستويات:
+    <span class="lvl k">المعرفة</span><span class="lvl a">التطبيق</span><span class="lvl r">الاستدلال</span></p></div>
+</section>
+
+<!-- 4 Types -->
+<section class="slide" data-title="نوعا الهضم">
+  <div class="s-head"><div class="badge" data-ic="bulb"></div><div><div class="kicker">مفهوم أساسي</div><h2>ما الهضم؟ وما نوعاه؟</h2></div></div>
+  <div class="types">
+    <div class="card type mech">
+      <div class="type-h"><span class="ic" data-ic="gear" style="background:var(--plum-l);color:var(--plum);--tint:#fff"></span><h3>الهضم الميكانيكي</h3></div>
+      <p class="def">تكسير الطعام إلى قطع أصغر <b>دون</b> أن تتغيّر مادته.</p>
+      <div class="demo">
+        <div class="lab">قطعة كبيرة</div>
+        <svg viewBox="0 0 330 150" class="demo-m" id="demoM">
+          <g fill="#F5C97A" stroke="#C9953A" stroke-width="2.5">
+            <rect class="mpiece p1" x="119" y="29" width="45" height="45" rx="6"/>
+            <rect class="mpiece p2" x="166" y="29" width="45" height="45" rx="6"/>
+            <rect class="mpiece p3" x="119" y="76" width="45" height="45" rx="6"/>
+            <rect class="mpiece p4" x="166" y="76" width="45" height="45" rx="6"/>
+          </g>
+          <g fill="#E3AE56"><circle cx="135" cy="45" r="2.5"/><circle cx="190" cy="55" r="2.5"/><circle cx="140" cy="100" r="2.5"/><circle cx="192" cy="96" r="2.5"/></g>
+        </svg>
+        <div class="lab">قطع صغيرة<br>(المادة نفسها)</div>
+      </div>
+      <div class="demo-row"><button class="btn ghost" data-demo="demoM"><span class="ic" data-ic="restart"></span> شغّلي التجربة</button>
+        <div class="ex"><span>مضغ الطعام</span><span>تقلّصات المعدة</span></div></div>
+    </div>
+    <div class="card type chem">
+      <div class="type-h"><span class="ic" data-ic="flask" style="background:var(--mint-l);color:var(--mint);--tint:#fff"></span><h3>الهضم الكيميائي</h3></div>
+      <p class="def">تحليل الطعام إلى مواد <b>أبسط</b> بفعل الإنزيمات والعصارات.</p>
+      <div class="demo">
+        <div class="lab">نشا<br>(سلسلة طويلة)</div>
+        <svg viewBox="0 0 330 150" class="demo-c" id="demoC">
+          <g stroke="#7FB8E0" stroke-width="5" class="link"><path d="M55,75 H275"/></g>
+          <g stroke="#3D7FC1" stroke-width="2.5" fill="#BBD9F2">
+            <circle class="bead" cx="55" cy="75" r="16"/><circle class="bead" cx="99" cy="75" r="16"/><circle class="bead" cx="143" cy="75" r="16"/>
+            <circle class="bead" cx="187" cy="75" r="16"/><circle class="bead" cx="231" cy="75" r="16"/><circle class="bead" cx="275" cy="75" r="16"/>
+          </g>
+          <g class="enz"><path d="M300,32 L314,24 A16,16 0 1 1 314,40 Z" fill="#1FA394"/><circle cx="318" cy="28" r="2" fill="#fff"/></g>
+        </svg>
+        <div class="lab">سكر بسيط<br>(وحدات منفصلة)</div>
+      </div>
+      <div class="demo-row"><button class="btn ghost" data-demo="demoC"><span class="ic" data-ic="restart"></span> شغّلي التجربة</button>
+        <div class="ex"><span>الأميليز في اللعاب</span><span>الببسين في المعدة</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Journey -->
+<section class="slide" data-title="رحلة الطعام">
+  <div class="s-head" style="margin-bottom:12px"><div class="badge" data-ic="food"></div><div><div class="kicker">الرحلة التفاعلية</div><h2>تتبّعي اللقمة محطةً بعد محطة</h2></div></div>
+  <div class="journey">
+    <div class="card j-body" id="jBody"></div>
+    <div class="j-side">
+      <div class="j-steps" id="jSteps"></div>
+      <div class="card j-panel" id="jPanel"></div>
+      <div class="j-ctrl">
+        <button class="btn ghost" id="jPrev"><span class="ic" data-ic="arrowR"></span> السابقة</button>
+        <button class="btn ghost" id="jReset"><span class="ic" data-ic="restart"></span> من البداية</button>
+        <button class="btn coral" id="jNext">انطلقي إلى المحطة التالية <span class="ic" data-ic="arrowL"></span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 Accessory -->
+<section class="slide" data-title="الأعضاء المساعدة">
+  <div class="s-head"><div class="badge" data-ic="liver"></div><div><div class="kicker">فريق الدعم</div><h2>الأعضاء المساعدة في الهضم</h2></div></div>
+  <div class="acc">
+    <div class="acc-side">
+      <div class="acc-pick" id="accPick">
+        <button data-org="liver"><span class="ic" data-ic="liver" style="color:#8E3F2C;--tint:#E9A48F"></span>الكبد</button>
+        <button data-org="gall"><span class="ic" data-ic="gall" style="color:#4F8A40;--tint:#BFE0B3"></span>الحوصلة الصفراوية</button>
+        <button data-org="pancreas"><span class="ic" data-ic="pancreas" style="color:#B5891F;--tint:#F8DE97"></span>البنكرياس</button>
+      </div>
+      <div class="card acc-detail" id="accDetail"></div>
+      <div class="acc-note"><span class="ic" data-ic="bulb"></span><span>الطعام <b>لا يمرّ</b> عبر هذه الأعضاء، لكنها تصبّ عصاراتها في الأمعاء الدقيقة لتساعد على الهضم.</span></div>
+    </div>
+    <div class="card acc-view" id="accView"><div class="hint">اضغطي على العضو في الرسم أو على البطاقة</div></div>
+  </div>
+</section>
+
+<!-- 7 Villi -->
+<section class="slide" data-title="الخملات والامتصاص">
+  <div class="s-head"><div class="badge" data-ic="villi"></div><div><div class="kicker">تكبير داخل الأمعاء الدقيقة</div><h2>الخملات: بوّابات الغذاء إلى الدم</h2></div></div>
+  <div class="villi">
+    <div class="card v-view">
+      <div class="v-cap"><span>تجويف الأمعاء (غذاء مهضوم)</span><span>جدار الأمعاء الدقيقة</span></div>
+      <svg viewBox="0 0 560 300" id="vSvg"></svg>
+    </div>
+    <div class="v-ctrl">
+      <div class="card v-box">
+        <h4><span class="ic" data-ic="villi"></span>عدد الخملات في الجزء المكبَّر</h4>
+        <input type="range" id="vRange" min="0" max="14" step="1" value="0">
+        <div class="ratio" id="vRatio">×١</div>
+        <small style="color:var(--muted);font-weight:700;font-size:16px">مساحة سطح الامتصاص مقارنةً بجدار أملس</small>
+      </div>
+      <div class="card v-box">
+        <button class="btn mint" id="vGo" style="width:100%;justify-content:center"><span class="ic" data-ic="drop"></span> ابدئي الامتصاص</button>
+        <div class="v-count" id="vCount" style="margin-top:10px"></div>
+      </div>
+      <div class="card v-box"><p class="v-exp">جرّبي الامتصاص بجدار أملس، ثم زيدي الخملات وأعيدي التجربة.<br><b style="color:var(--coral)">كلما زادت الخملات زادت المساحة، فزاد الامتصاص.</b></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 Order -->
+<section class="slide" data-title="نشاط: رتّبي المحطات">
+  <div class="s-head"><div class="badge" data-ic="order"></div><div><div class="kicker">نشاط ١</div><h2>رتّبي محطات الرحلة من البداية إلى النهاية</h2></div></div>
+  <div class="slots" id="slots"></div>
+  <div class="cards" id="ocards"></div>
+  <div class="act-foot"><div class="status" id="oStatus">اضغطي على المحطة الأولى التي يدخلها الطعام.</div>
+    <button class="btn ghost" id="oReset"><span class="ic" data-ic="restart"></span> إعادة النشاط</button></div>
+</section>
+
+<!-- 9 Classify -->
+<section class="slide" data-title="نشاط: صنّفي">
+  <div class="s-head"><div class="badge" data-ic="flask"></div><div><div class="kicker">نشاط ٢</div><h2>ميكانيكي أم كيميائي؟ صنّفي العبارات</h2></div></div>
+  <div class="pool" id="pool"></div>
+  <div class="bins">
+    <div class="card bin m" data-bin="m"><div class="bin-h"><span class="ic" data-ic="gear"></span><div><b>هضم ميكانيكي</b><small>تكسير دون تغيير المادة</small></div></div><div class="bin-list"></div></div>
+    <div class="card bin c" data-bin="c"><div class="bin-h"><span class="ic" data-ic="flask"></span><div><b>هضم كيميائي</b><small>تحليل بالإنزيمات إلى مواد أبسط</small></div></div><div class="bin-list"></div></div>
+  </div>
+  <div class="act-foot"><div class="status" id="cStatus">اختاري عبارة، ثم اضغطي على الصندوق المناسب.</div>
+    <button class="btn ghost" id="cReset"><span class="ic" data-ic="restart"></span> إعادة النشاط</button></div>
+</section>
+
+<!-- 10 Quiz -->
+<section class="slide" data-title="اختبري نفسك">
+  <div class="s-head" style="margin-bottom:12px"><div class="badge" data-ic="star"></div><div><div class="kicker">بنمط التقييم الخارجي</div><h2>اختبري نفسك</h2></div></div>
+  <div class="card quiz" id="quiz"></div>
+</section>
+
+<!-- 11 Habits -->
+<section class="slide" data-title="عادات صحية">
+  <div class="s-head"><div class="badge" data-ic="apple"></div><div><div class="kicker">من الدرس إلى الحياة</div><h2>عادات تحافظ على جهازك الهضمي</h2></div></div>
+  <div class="habits" id="habits"></div>
+  <div class="habit-tip">اضغطي على كل بطاقة لتعرفي السبب</div>
+</section>
+
+<!-- 12 Summary -->
+<section class="slide" data-title="الخلاصة">
+  <div class="s-head"><div class="badge" data-ic="check"></div><div><div class="kicker">نهاية الرحلة</div><h2>الخلاصة وبطاقة الخروج</h2></div></div>
+  <div class="card flow" id="flow"></div>
+  <div class="sum-grid">
+    <div class="card take"><h4><span class="ic" data-ic="bulb"></span>أهم ما تعلّمناه</h4><ul>
+      <li><span class="ic" data-ic="check"></span>الهضم <b>ميكانيكي</b> (تكسير) و<b>كيميائي</b> (تحليل بالإنزيمات).</li>
+      <li><span class="ic" data-ic="check"></span>يبدأ هضم النشويات في <b>الفم</b>، والبروتينات في <b>المعدة</b>.</li>
+      <li><span class="ic" data-ic="check"></span>يكتمل الهضم ويُمتص الغذاء في <b>الأمعاء الدقيقة</b> عبر الخملات.</li>
+      <li><span class="ic" data-ic="check"></span>تمتص <b>الأمعاء الغليظة</b> الماء وتكوّن الفضلات.</li>
+    </ul></div>
+    <div class="card exit"><h4><span class="ic" data-ic="pencil"></span>بطاقة الخروج ٣ - ٢ - ١</h4>
+      <div class="exit-row"><span>٣</span>أعضاء يمرّ بها الطعام بالترتيب.</div>
+      <div class="exit-row"><span>٢</span>عصارتان هاضمتان ومكان عمل كل منهما.</div>
+      <div class="exit-row"><span>١</span>سؤال ما زال يدور في ذهنك.</div>
+    </div>
+  </div>
+</section>
+
+<nav id="nav">
+  <div id="navTitle"></div>
+  <button class="nbtn" id="prevBtn" title="السابق"><span class="ic" data-ic="arrowR"></span></button>
+  <div id="dots"></div>
+  <button class="nbtn" id="nextBtn" title="التالي"><span class="ic" data-ic="arrowL"></span></button>
+  <div id="counter"></div>
+  <button class="nbtn" id="fsBtn" title="ملء الشاشة"><span class="ic" data-ic="expand"></span></button>
+</nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]).replace('.','٫');
+
+/* ===== Hand-drawn icons ===== */
+function gearPath(cx,cy,ro,ri,n){let d='',st=Math.PI*2/n;
+  for(let i=0;i<n;i++){const a=i*st-Math.PI/2;
+    const pts=[[ri,a],[ro,a+st*.18],[ro,a+st*.45],[ri,a+st*.63]];
+    pts.forEach(([r,t],k)=>{d+=(i===0&&k===0?'M':'L')+(cx+r*Math.cos(t)).toFixed(1)+','+(cy+r*Math.sin(t)).toFixed(1)+' '});}
+  return d+'Z';}
+const IC={
+ tooth:'<path class="t" d="M24,13 C20,10 15,9 12,11 C8,14 8,20 10,25 C12,29 13,33 14,38 C15,42 18,42 19,38 L21,31 C22,28 26,28 27,31 L29,38 C30,42 33,42 34,38 C35,33 36,29 38,25 C40,20 40,14 36,11 C33,9 28,10 24,13 Z"/><path d="M15,17 C15.5,15 17,14 19,14"/>',
+ eso:'<path class="t" d="M18,4 L30,4 C29,14 31,24 30,34 L30,44 L18,44 L18,34 C17,24 19,14 18,4 Z"/><circle class="f" cx="24" cy="16" r="4.5"/><path d="M20,28 L24,32 L28,28"/><path d="M20,35 L24,39 L28,35" opacity=".5"/>',
+ stomach:'<path class="t" d="M17,4 V11 C17,17 9,20 9,29 C9,37 16,43 25,43 C34,43 41,36 40,27 C39,19 33,15 28,16 C24,17 24,22 21,22 C18,22 17,18 17,11"/><path d="M38,35 C40,38 42,40 45,40"/><path d="M15,31 C19,35 25,36 30,33" opacity=".5"/>',
+ smallint:'<rect class="t" x="6" y="6" width="36" height="36" rx="11"/><path d="M13,15 C13,11 35,11 35,16 C35,21 13,19 13,24 C13,29 35,27 35,32 C35,37 16,37 15,41"/>',
+ largeint:'<path class="tk" d="M13,40 V15 C13,11 15,9 19,9 H29 C33,9 35,11 35,15 V34 C35,38 32,40 28,40 H24 V45"/><path d="M13,40 V15 C13,11 15,9 19,9 H29 C33,9 35,11 35,15 V34 C35,38 32,40 28,40 H24 V45" stroke-width="1.6" opacity=".35"/><path d="M9,20 H17 M9,30 H17 M21,5 V13 M28,5 V13 M31,21 H39 M31,30 H39"/>',
+ exit:'<path class="tk" d="M24,4 V27"/><path d="M15,26 L24,36 L33,26"/><path d="M10,43 H38"/>',
+ liver:'<path class="t" d="M5,20 C5,12 16,9 26,10 C36,11 43,13 42,19 C41,25 32,30 22,33 C13,36 5,30 5,20 Z"/><path d="M21,12 C22,18 22,25 19,31" opacity=".55"/><path d="M28,34 C29,38 31,40 34,41"/>',
+ gall:'<path class="t" d="M24,10 C30,10 34,18 34,27 C34,36 30,42 24,42 C18,42 14,36 14,27 C14,18 18,10 24,10 Z"/><path d="M24,10 V4 H32"/><path d="M19,23 C19,20 21,18 23,18" opacity=".6"/>',
+ pancreas:'<path class="t" d="M5,27 C7,21 17,21 25,21 C33,21 39,16 43,19 C46,22 42,27 36,28 C28,30 18,33 12,33 C8,33 4,31 5,27 Z"/><circle class="f" cx="14" cy="27.5" r="1.5"/><circle class="f" cx="22" cy="26.5" r="1.5"/><circle class="f" cx="30" cy="25" r="1.5"/>',
+ flask:'<path class="t" d="M20,6 V18 L10,37 C8,41 11,43 15,43 H33 C37,43 40,41 38,37 L28,18 V6"/><path d="M17,6 H31"/><path d="M14,30 H34" opacity=".5"/><circle cx="22" cy="36" r="2"/><circle cx="29" cy="33" r="1.5"/>',
+ gear:'<path class="t" d="'+gearPath(24,24,20,14.5,8)+'"/><circle cx="24" cy="24" r="6"/>',
+ drop:'<path class="t" d="M24,5 C24,5 12,19 12,29 C12,36 17,42 24,42 C31,42 36,36 36,29 C36,19 24,5 24,5 Z"/><path d="M18,30 C18,34 20,36 23,37" opacity=".6"/>',
+ clock:'<circle class="t" cx="24" cy="26" r="17"/><path d="M24,16 V26 L31,30"/><path d="M19,5 H29"/>',
+ target:'<circle class="t" cx="22" cy="26" r="17"/><circle cx="22" cy="26" r="10"/><circle class="f" cx="22" cy="26" r="3.2"/><path d="M22,26 L40,8 M33,8 H40 V15"/>',
+ bulb:'<path class="t" d="M24,6 C16,6 11,12 11,19 C11,25 15,28 17,32 V35 H31 V32 C33,28 37,25 37,19 C37,12 32,6 24,6 Z"/><path d="M18,39 H30 M20,43 H28"/><path d="M20,21 L24,25 L28,21" opacity=".6"/>',
+ ask:'<path class="t" d="M8,10 C8,7 10,5 13,5 H35 C38,5 40,7 40,10 V30 C40,33 38,35 35,35 H20 L12,42 V35 H13 C10,35 8,33 8,30 Z"/><path d="M19,15 C19,12 21,11 24,11 C27,11 29,13 29,15.5 C29,19 24,19.5 24,23"/><circle class="f" cx="24" cy="28.5" r="1.7"/>',
+ check:'<path d="M10,25 L20,35 L38,13"/>',
+ cross:'<path d="M13,13 L35,35 M35,13 L13,35"/>',
+ star:'<path class="t" d="M24,5 L29.5,17 L42,18.5 L32.5,27 L35.5,40 L24,33.5 L12.5,40 L15.5,27 L6,18.5 L18.5,17 Z"/>',
+ apple:'<path class="t" d="M24,15 C20,11 10,12 10,23 C10,34 17,43 22,43 C23,43 24,42 24,42 C24,42 25,43 26,43 C31,43 38,34 38,23 C38,12 28,11 24,15 Z"/><path d="M24,15 C24,11 25,8 27,6"/><path class="t" d="M26,10 C29,6 34,6 36,8 C34,11 29,12 26,10 Z"/>',
+ glass:'<path class="t" d="M14.6,20 H33.4 L31.5,42 H16.5 Z"/><path d="M12,7 H36 L32,43 H16 Z"/><path d="M19,28 C21,26 25,30 28,28" opacity=".55"/>',
+ run:'<circle class="t" cx="29" cy="8" r="4.5"/><path d="M26,15 L22,27 L29,32 L27,43 M22,27 L15,35 M25,18 L33,22 L37,16 M25,18 L18,21 L14,16"/>',
+ food:'<path class="t" d="M6,21 C6,11 42,11 42,21 Z"/><path d="M5,26 C10,23 14,29 19,26 C24,23 28,29 33,26 C37,24 40,27 43,26"/><rect class="t" x="6" y="30" width="36" height="9" rx="4.5"/><circle class="f" cx="18" cy="16" r="1.2"/><circle class="f" cx="27" cy="15" r="1.2"/>',
+ magnifier:'<circle class="t" cx="20" cy="20" r="13"/><path d="M30,30 L42,42"/><path d="M14,17 C15,14 17,13 19,13" opacity=".6"/>',
+ arrowL:'<path d="M30,10 L16,24 L30,38"/>',
+ arrowR:'<path d="M18,10 L32,24 L18,38"/>',
+ expand:'<path d="M8,18 V8 H18 M30,8 H40 V18 M40,30 V40 H30 M18,40 H8 V30"/>',
+ restart:'<path d="M38,25 A14,14 0 1 1 33,13"/><path d="M35,5 V14 H26"/>',
+ pencil:'<path class="t" d="M10,38 L12,30 L32,10 L38,16 L18,36 Z"/><path d="M28,14 L34,20 M10,38 L18,36"/>',
+ villi:'<path class="t" d="M4,43 V25 C4,16 13,16 13,25 V31 H15 V17 C15,8 24,8 24,17 V31 H26 V21 C26,12 35,12 35,21 V31 H37 V27 C37,20 44,20 44,27 V43 Z"/><path d="M8.5,43 V26 M19.5,43 V18 M30.5,43 V22" opacity=".45"/>',
+ order:'<rect class="t" x="6" y="6" width="36" height="36" rx="9"/><circle class="f" cx="14" cy="16" r="2"/><circle class="f" cx="14" cy="24" r="2"/><circle class="f" cx="14" cy="32" r="2"/><path d="M20,16 H34 M20,24 H34 M20,32 H29"/>',
+ trophy:'<path class="t" d="M15,7 H33 V17 C33,23 29,27 24,27 C19,27 15,23 15,17 Z"/><path d="M15,10 H8 C8,17 11,20 15,20 M33,10 H40 C40,17 37,20 33,20 M24,27 V35"/><path class="t" d="M18,35 H30 V42 H18 Z"/>',
+ girl:'<circle class="t" cx="24" cy="10" r="6"/><path class="t" d="M24,18 L13,40 H35 Z"/><path d="M20,40 V45 M28,40 V45"/>'
+};
+const ic=n=>`<svg viewBox="0 0 48 48" class="icn" aria-hidden="true">${IC[n]}</svg>`;
+function paintIcons(root=document){root.querySelectorAll('[data-ic]').forEach(el=>{if(!el.dataset.done){el.innerHTML=ic(el.dataset.ic);el.dataset.done=1}})}
+
+/* ===== Body illustration ===== */
+const SEG_A='M200,104 L200,140 L206,262';
+const SEG_B='M206,262 C236,258 262,272 264,300 C266,326 244,342 214,342';
+const SEG_C='M214,342 C210,356 214,368 232,372 C252,376 254,392 236,400 C214,408 162,402 162,418 C162,434 256,426 256,442 C256,458 162,450 162,466 C162,482 256,474 254,488 C252,500 186,500 170,503 L152,505';
+const COLON='M152,505 C134,508 126,498 126,486 L126,398 C126,388 134,383 146,383 L262,383 C274,383 280,390 280,400 L280,500 C280,520 260,528 236,526';
+const RECT='M236,526 C220,524 206,530 204,545 L201,568';
+const SEG_D=COLON+' '+RECT.replace(/^M[\d.,]+\s*/,'');
+const strip=d=>d.replace(/^M[\d.,]+\s*/,'');
+const TRACK=SEG_A+' '+strip(SEG_B)+' '+strip(SEG_C)+' '+strip(SEG_D);
+const MK=[[254,100],[234,205],[302,300],[312,445],[96,440],[246,566]];
+
+function bodySVG(p,o={}){
+  const tube=(id,d,outer,inner,w1,w2,cls='')=>`<g class="org ${cls}" id="${p}-${id}" data-org="${id}"><path d="${d}" fill="none" stroke="${outer}" stroke-width="${w1}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${inner}" stroke-width="${w2}" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  const pick=o.pick?'pick':'';
+  return `<svg viewBox="${o.viewBox||'0 0 400 600'}" class="body-svg" id="${p}-svg" xmlns="${NS}">
+  <path class="skin" d="M150,150 L250,150 C250,165 270,172 300,178 C330,186 338,210 336,240 L330,420 C328,500 300,560 260,580 L140,580 C100,560 72,500 70,420 L64,240 C62,210 70,186 100,178 C130,172 150,165 150,150 Z"/>
+  <circle class="skin" cx="200" cy="74" r="52"/>
+  <rect x="177" y="116" width="46" height="40" fill="#FBE6D6"/>
+  <path d="M177,124 V152 M223,124 V152" stroke="#E7C6AE" stroke-width="2.5"/>
+  <circle cx="182" cy="64" r="4.5" fill="#1E3448"/><circle cx="218" cy="64" r="4.5" fill="#1E3448"/>
+  <circle cx="170" cy="84" r="7" fill="#F5B4A4" opacity=".6"/><circle cx="230" cy="84" r="7" fill="#F5B4A4" opacity=".6"/>
+  <g class="org ${pick}" id="${p}-liver" data-org="liver"><path d="M104,252 C120,232 196,230 214,246 C222,256 212,272 192,282 C166,296 128,300 110,288 C100,280 98,262 104,252 Z" fill="#C0644A" stroke="#8E3F2C" stroke-width="2.5"/><path d="M160,240 C166,256 168,270 164,288" stroke="#A44F38" stroke-width="2" fill="none"/></g>
+  <g class="org ${pick}" id="${p}-pancreas" data-org="pancreas"><path d="M168,358 C196,350 246,352 280,344 C292,341 298,350 288,357 C254,368 210,370 180,370 C166,370 160,362 168,358 Z" fill="#F4C95D" stroke="#C99A2E" stroke-width="2.5"/></g>
+  <g class="org" id="${p}-stomach" data-org="stomach"><path class="stb" d="M206,256 C214,246 250,244 268,262 C286,282 284,322 262,342 C246,356 222,356 212,344 C206,337 208,328 216,326 C230,322 240,318 242,302 C244,286 232,276 220,276 C210,276 206,270 206,256 Z" fill="#EF8A92" stroke="#C85A66" stroke-width="2.5"/><path d="M250,268 C262,282 264,304 256,322 M236,334 C246,334 254,330 258,324" stroke="#D86F7B" stroke-width="2" fill="none" opacity=".8"/></g>
+  ${tube('large',COLON,'#B8693F','#E7A274',24,17)}
+  ${tube('small',SEG_C,'#D9776E','#F7B5A9',14,9)}
+  <g class="org" id="${p}-rectum" data-org="rectum"><path d="${RECT}" fill="none" stroke="#A65A34" stroke-width="20" stroke-linecap="round"/><path d="${RECT}" fill="none" stroke="#D98C5F" stroke-width="13" stroke-linecap="round"/></g>
+  ${tube('eso',SEG_A,'#D9776E','#F5ADA3',13,8)}
+  <g class="org ${pick}" id="${p}-gall" data-org="gall"><ellipse cx="178" cy="292" rx="9" ry="13" fill="#8CC27A" stroke="#5E9A4E" stroke-width="2.5" transform="rotate(-20 178 292)"/></g>
+  <g class="org" id="${p}-mouth" data-org="mouth"><path d="M185,95 Q200,90 215,95 Q210,111 200,111 Q190,111 185,95 Z" fill="#E4606D" stroke="#B84452" stroke-width="2"/><path d="M190,98.5 H210" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
+  ${o.full?`<path id="${p}-track" d="${TRACK}" fill="none" stroke="none"/>
+  <path id="${p}-trail" d="${TRACK}" fill="none" stroke="#FFC93C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+  ${MK.map((m,i)=>`<g class="mk" data-st="${i}" transform="translate(${m[0]},${m[1]})"><circle r="14"/><text y="5">${AR(i+1)}</text></g>`).join('')}
+  <g id="${p}-bolus"><circle r="10" class="bo" fill="#F6C453" stroke="#7A5230" stroke-width="1.6"/><circle cx="-3.4" cy="-2" r="1.7" fill="#2b1d12"/><circle cx="3.4" cy="-2" r="1.7" fill="#2b1d12"/><path d="M-3,3 Q0,5.5 3,3" stroke="#2b1d12" stroke-width="1.3" fill="none" stroke-linecap="round"/></g>`:''}
+  ${o.extra||''}
+  </svg>`;
+}
+
+/* ===== Slides navigation ===== */
+const slides=$$('.slide'); let cur=0;
+const dots=$('#dots');
+slides.forEach((s,i)=>{const b=document.createElement('button');b.title=s.dataset.title;b.onclick=()=>go(i);dots.appendChild(b)});
+function go(i){
+  if(i<0||i>=slides.length)return;
+  slides[cur].classList.remove('active'); dots.children[cur].classList.add('seen');
+  cur=i; slides[cur].classList.add('active');
+  [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===cur));
+  $('#navTitle').textContent=slides[cur].dataset.title;
+  $('#counter').textContent=AR(cur+1)+' / '+AR(slides.length);
+  $('#prevBtn').disabled=cur===0; $('#nextBtn').disabled=cur===slides.length-1;
+}
+$('#prevBtn').onclick=()=>go(cur-1); $('#nextBtn').onclick=()=>go(cur+1);
+$$('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea,[contenteditable]'))return;
+  if(['ArrowLeft','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+});
+$('#fsBtn').onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})};
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);$('#stage').style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);
+
+/* ===== Cover art ===== */
+function buildCover(){
+  const P='M95,80 C300,40 470,120 390,225 C310,325 120,255 140,372 C158,478 380,430 450,500';
+  const icons=['tooth','eso','stomach','smallint','largeint','exit'];
+  $('#coverArt').innerHTML=`<svg viewBox="0 0 560 560" xmlns="${NS}">
+    <circle cx="290" cy="290" r="250" fill="#FDEDE2"/>
+    <circle cx="470" cy="110" r="40" fill="#D9F3EF"/><circle cx="90" cy="470" r="28" fill="#FFF1CC"/>
+    <path id="cvPath" d="${P}" fill="none" stroke="#F3B9AD" stroke-width="22" stroke-linecap="round"/>
+    <path d="${P}" fill="none" stroke="#EE6352" stroke-width="3.5" stroke-dasharray="2 12" stroke-linecap="round"/>
+    <g id="cvSt"></g>
+    <g id="cvApple"></g></svg>`;
+  const path=$('#cvPath'), L=path.getTotalLength(); let h='';
+  [.2,.36,.52,.68,.84,.99].forEach((f,i)=>{const p=path.getPointAtLength(L*f);
+    h+=`<circle cx="${p.x}" cy="${p.y}" r="30" fill="#fff" stroke="#1E3448" stroke-width="2.5"/>
+    <svg x="${p.x-19}" y="${p.y-19}" width="38" height="38" viewBox="0 0 48 48" class="icn" style="color:#EE6352;--tint:#FDE4DF">${IC[icons[i]]}</svg>
+    <circle cx="${p.x+24}" cy="${p.y-24}" r="11" fill="#1E3448"/><text x="${p.x+24}" y="${p.y-19.5}" fill="#fff" font-size="13" font-weight="900" text-anchor="middle" font-family="Tajawal">${AR(i+1)}</text>`});
+  $('#cvSt').innerHTML=h;
+  const a=path.getPointAtLength(0);
+  $('#cvApple').innerHTML=`<g transform="translate(${a.x-58},${a.y-66})"><g style="animation:bob 2.4s ease-in-out infinite">
+    <path d="M58,30 C48,20 20,22 20,52 C20,82 40,104 54,104 C56,104 58,102 58,102 C58,102 60,104 62,104 C76,104 96,82 96,52 C96,22 68,20 58,30 Z" fill="#EE6352" stroke="#1E3448" stroke-width="3"/>
+    <path d="M58,30 C58,22 60,15 65,10" stroke="#1E3448" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M62,20 C68,10 80,10 85,14 C80,21 70,24 62,20 Z" fill="#1FA394" stroke="#1E3448" stroke-width="2.5"/>
+    <circle cx="46" cy="58" r="7" fill="#fff"/><circle cx="70" cy="58" r="7" fill="#fff"/>
+    <circle cx="47.5" cy="59" r="3.6" fill="#1E3448"/><circle cx="71.5" cy="59" r="3.6" fill="#1E3448"/>
+    <path d="M49,74 Q58,82 67,74" stroke="#1E3448" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="36" cy="72" r="5" fill="#F9A99C"/><circle cx="80" cy="72" r="5" fill="#F9A99C"/>
+    <path d="M30,40 C33,34 38,31 43,30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></g></g>`;
+}
+const st=document.createElement('style');st.textContent='@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}';document.head.appendChild(st);
+
+/* ===== Hook ===== */
+function buildHook(){
+  const r=$('#ruler');
+  for(let m=0;m<=15;m+=3){const t=document.createElement('div');t.className='tick';t.style.right=(m/15*100)+'%';t.textContent=AR(m)+' م';r.appendChild(t)}
+  const g=$('#guess'),upd=()=>{const v=+g.value;$('#guessVal').textContent=AR(v)+' م';$('#gmark').style.right=(v/15*100)+'%'};
+  g.oninput=upd;upd();
+  $('#girls').innerHTML=Array(6).fill(0).map(()=>`<span class="ic">${ic('girl')}</span>`).join('');
+  $('#revealBtn').onclick=()=>{
+    $('#ansBar').style.width='60%';$('#amark').style.opacity=1;$('#revealBox').classList.add('show');
+    const d=Math.abs(+g.value-9);
+    $('#guessFb').textContent=d<=1?'توقّعكِ ممتاز!':d<=3?'توقّعكِ قريب!':'هل توقّعتِ ذلك؟';
+  };
+}
+
+/* ===== Digestion type demos ===== */
+$$('[data-demo]').forEach(b=>b.onclick=()=>{const el=document.getElementById(b.dataset.demo);
+  if(el.classList.contains('on')){el.classList.remove('on')}
+  else{el.classList.add('on');
+    if(b.dataset.demo==='demoC'){el.querySelectorAll('.bead').forEach((c,i)=>c.style.transform=`translate(${(i-2.5)*6}px,${i%2?14:-14}px)`)}}
+  if(!el.classList.contains('on'))el.querySelectorAll('.bead').forEach(c=>c.style.transform='');
+});
+
+/* ===== Journey ===== */
+const ST=[
+ {name:'الفم',ic:'tooth',food:'لقمة ← بلعة',org:'mouth',m:1,c:1,agent:'اللعاب (الأميليز)',time:'ثوانٍ إلى دقيقة',col:'#F6C453',sz:1.15,
+  b:['الأسنان تقطع الطعام وتطحنه، واللسان يقلّبه ويخلطه.','اللعاب يليّن الطعام، وفيه إنزيم <b>الأميليز</b> الذي يبدأ هضم النشويات.','يتشكّل الطعام في كتلة لينة تُسمّى <b>البلعة</b>.'],
+  fact:'تفرز الغدد اللعابية نحو لتر من اللعاب يوميًا تقريبًا.',
+  q:'أي نوع من الهضم يحدث في الفم؟',o:['ميكانيكي فقط','كيميائي فقط','ميكانيكي وكيميائي'],a:2,fb:'صحيح: الأسنان (ميكانيكي) + الأميليز (كيميائي).'},
+ {name:'المريء',ic:'eso',food:'بلعة',org:'eso',m:0,c:0,proc:'نقل فقط',agent:'لا توجد عصارة هاضمة',time:'٥–١٠ ثوانٍ',col:'#F2B866',sz:1.05,
+  b:['عند البلع يُغلق <b>لسان المزمار</b> مدخل القصبة الهوائية فلا يدخلها الطعام.','المريء أنبوب عضلي طوله نحو ٢٥ سم يصل البلعوم بالمعدة.','تدفع <b>الحركة الدودية</b> (انقباضات متتالية) البلعة نحو المعدة.'],
+  fact:'بفضل الحركة الدودية يصل الطعام إلى المعدة حتى لو كان الشخص مستلقيًا!',
+  q:'ما الذي يمنع دخول الطعام إلى القصبة الهوائية؟',o:['لسان المزمار','اللسان','الأسنان'],a:0,fb:'صحيح: لسان المزمار يغلق القصبة الهوائية أثناء البلع.'},
+ {name:'المعدة',ic:'stomach',food:'كيموس',org:'stomach',m:1,c:1,agent:'العصارة المعدية (حمض + ببسين)',time:'٢–٤ ساعات',col:'#D9B25C',sz:1.25,
+  b:['كيس عضلي تنقبض جدرانه فتخلط الطعام وتمزجه بالعصارة المعدية.','العصارة المعدية فيها <b>حمض الهيدروكلوريك</b> وإنزيم <b>الببسين</b> الذي يبدأ هضم البروتينات.','يتحوّل الطعام إلى سائل كثيف يُسمّى <b>الكيموس</b>.'],
+  fact:'طبقة من المخاط تبطّن جدار المعدة وتحميها من الحمض القوي.',
+  q:'يبدأ هضم البروتينات في:',o:['الفم','المعدة','الأمعاء الغليظة'],a:1,fb:'صحيح: إنزيم الببسين في المعدة يبدأ هضم البروتينات.'},
+ {name:'الأمعاء الدقيقة',ic:'smallint',food:'مواد غذائية بسيطة',org:'small',m:0,c:1,proc:'امتصاص الغذاء',agent:'الصفراء + العصارة البنكرياسية',time:'٣–٥ ساعات',col:'#E9CF86',sz:.85,
+  b:['أطول أجزاء القناة الهضمية (نحو ٦–٧ م)، وفيها <b>يكتمل</b> الهضم الكيميائي.','تصلها العصارة الصفراوية من الكبد والعصارة البنكرياسية من البنكرياس.','تمتص <b>الخملات</b> المواد الغذائية المهضومة وتنقلها إلى الدم.'],
+  fact:'ملايين الخملات في جدارها تجعل مساحة الامتصاص كبيرة جدًا.',
+  q:'أين يُمتص معظم الغذاء المهضوم؟',o:['المعدة','الأمعاء الدقيقة','المريء'],a:1,fb:'صحيح: تمتصه الخملات في الأمعاء الدقيقة.'},
+ {name:'الأمعاء الغليظة',ic:'largeint',food:'فضلات',org:'large',m:0,c:0,proc:'امتصاص الماء',agent:'بكتيريا نافعة',time:'١٢–٢٤ ساعة أو أكثر',col:'#A8774A',sz:1.1,
+  b:['يصلها ما لم يُهضم أو يُمتص، مثل الألياف.','تمتص <b>الماء والأملاح</b> المتبقية فتتماسك الفضلات.','تعيش فيها <b>بكتيريا نافعة</b> تنتج بعض الفيتامينات مثل فيتامين K.'],
+  fact:'طولها نحو ١٫٥ م فقط، لكنها أعرض من الأمعاء الدقيقة؛ لذلك سُمّيت «غليظة».',
+  q:'الوظيفة الرئيسة للأمعاء الغليظة:',o:['هضم البروتينات','امتصاص الماء','إفراز اللعاب'],a:1,fb:'صحيح: تمتص الماء المتبقي وتكوّن الفضلات.'},
+ {name:'المستقيم والشرج',ic:'exit',food:'فضلات صلبة',org:'rectum',m:0,c:0,proc:'إخراج',agent:'—',time:'الرحلة كلها: ٢٤–٧٢ ساعة',col:'#7A5230',sz:1.1,
+  b:['يخزّن <b>المستقيم</b> الفضلات مؤقتًا.','تخرج الفضلات من الجسم عبر فتحة <b>الشرج</b>.','بهذا تنتهي رحلة اللقمة داخل الجهاز الهضمي.'],
+  fact:'الألياف وشرب الماء يسهّلان حركة الفضلات ويمنعان الإمساك.',
+  q:'الترتيب الصحيح لنهاية الرحلة:',o:['الأمعاء الغليظة ← المستقيم ← الشرج','المستقيم ← الأمعاء الغليظة ← الشرج'],a:0,fb:'صحيح: الأمعاء الغليظة ثم المستقيم ثم الشرج.'}
+];
+let J={i:0,L:0,stops:[],total:0,busy:false,visited:new Set([0])};
+function buildJourney(){
+  $('#jBody').innerHTML=bodySVG('j',{full:true});
+  const svg=$('#j-svg');
+  const len=d=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);svg.appendChild(p);const l=p.getTotalLength();p.remove();return l};
+  const [a,b,c,d]=[SEG_A,SEG_B,SEG_C,SEG_D].map(len);
+  J.total=$('#j-track').getTotalLength();
+  J.stops=[0,a*.55,a+b*.5,a+b+c*.5,a+b+c+d*.42,J.total-1];
+  const tr=$('#j-trail');tr.style.strokeDasharray=J.total+' '+J.total;
+  $('#jSteps').innerHTML=ST.map((s,i)=>`<button data-st="${i}"><span class="n">${AR(i+1)}</span>${s.name.split(' ')[0]==='المستقيم'?'الشرج':s.name.replace('الأمعاء ','')}</button>`).join('');
+  $$('#jSteps button,#j-svg .mk').forEach(el=>el.addEventListener('click',()=>travel(+el.dataset.st)));
+  $('#jNext').onclick=()=>travel(J.i+1); $('#jPrev').onclick=()=>travel(J.i-1);
+  $('#jReset').onclick=()=>{J.visited=new Set([0]);travel(0,true)};
+  place(0);renderStation();
+}
+function place(L){
+  J.L=L;const p=$('#j-track').getPointAtLength(L),s=ST[J.i].sz;
+  $('#j-bolus').setAttribute('transform',`translate(${p.x},${p.y}) scale(${s})`);
+  $('#j-trail').style.strokeDashoffset=J.total-L;
+}
+function travel(i,instant){
+  if(J.busy||i<0||i>=ST.length||(i===J.i&&!instant))return;
+  J.busy=true;const from=J.L,to=J.stops[i],dur=instant?1:Math.min(2600,Math.max(800,Math.abs(to-from)*3.2)),t0=performance.now();
+  $$('#j-svg .org').forEach(o=>o.classList.remove('glow'));
+  const step=t=>{let k=Math.min(1,(t-t0)/dur);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    place(from+(to-from)*k);
+    if(k<1)requestAnimationFrame(step);else{J.i=i;J.visited.add(i);J.busy=false;place(to);renderStation()}};
+  requestAnimationFrame(step);
+}
+function renderStation(){
+  const s=ST[J.i];
+  $('#j-bolus .bo').setAttribute('fill',s.col);
+  $$('#j-svg .org').forEach(o=>o.classList.toggle('glow',o.dataset.org===s.org));
+  $$('#jSteps button').forEach((b,k)=>{b.classList.toggle('on',k===J.i);b.classList.toggle('done',J.visited.has(k)&&k!==J.i)});
+  $$('#j-svg .mk').forEach((m,k)=>{m.classList.toggle('on',k===J.i);m.classList.toggle('done',J.visited.has(k)&&k!==J.i)});
+  $('#jPrev').disabled=J.i===0;
+  const nx=$('#jNext');nx.disabled=J.i===ST.length-1;
+  nx.innerHTML=(J.i===ST.length-1?'وصلت اللقمة إلى نهاية رحلتها':'انطلقي إلى المحطة التالية')+` <span class="ic">${ic('arrowL')}</span>`;
+  $('#jPanel').innerHTML=`
+   <div class="jp-head"><div class="jp-ic">${ic(s.ic)}</div><div><div class="jp-num">المحطة ${AR(J.i+1)} من ٦</div><h3>${s.name}</h3></div>
+     <div class="jp-food"><small>شكل الطعام</small><b>${s.food}</b></div></div>
+   <ul class="jp-list">${s.b.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <div class="jp-tags">
+     <span class="tag ${s.m?'m-on':''}"><span class="ic">${ic('gear')}</span>ميكانيكي</span>
+     <span class="tag ${s.c?'c-on':''}"><span class="ic">${ic('flask')}</span>كيميائي</span>
+     ${s.proc?`<span class="tag proc"><span class="ic">${ic('check')}</span>${s.proc}</span>`:''}
+     <span class="tag info"><span class="ic">${ic('drop')}</span>${s.agent}</span>
+     <span class="tag info"><span class="ic">${ic('clock')}</span>${s.time}</span>
+   </div>
+   <div class="jp-bottom">
+     <div class="jp-fact"><span class="ic">${ic('bulb')}</span><div><b>هل تعلمين؟</b>${s.fact}</div></div>
+     <div class="jp-q"><div class="qt"><span class="ic">${ic('ask')}</span>${s.q}</div>
+       <div class="opts">${s.o.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div class="fb"></div></div>
+   </div>`;
+  $$('#jPanel .opt').forEach(b=>b.onclick=()=>{
+    const ok=+b.dataset.k===s.a,fb=$('#jPanel .fb');
+    if(ok){$$('#jPanel .opt').forEach(x=>x.disabled=true);b.classList.add('ok');fb.className='fb ok';fb.textContent=s.fb}
+    else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');fb.className='fb no';fb.textContent='حاولي مرة أخرى'}
+  });
+}
+
+/* ===== Accessory organs ===== */
+const ACC={
+ liver:{n:'الكبد',t:'أكبر غدة في جسم الإنسان. يُنتج <b>العصارة الصفراوية</b> التي تُجزّئ الدهون إلى قطيرات صغيرة ليسهل على الإنزيمات هضمها.',j:'يُنتج: العصارة الصفراوية'},
+ gall:{n:'الحوصلة الصفراوية',t:'كيس صغير أسفل الكبد <b>يخزّن</b> العصارة الصفراوية، ويطلقها في الأمعاء الدقيقة عند تناول طعام دهني.',j:'تخزّن: العصارة الصفراوية'},
+ pancreas:{n:'البنكرياس',t:'يُفرز <b>العصارة البنكرياسية</b> التي تحتوي إنزيمات تهضم الكربوهيدرات والبروتينات والدهون، ومادة تعادل حمض المعدة.',j:'يُفرز: العصارة البنكرياسية'}
+};
+function buildAcc(){
+  const extra=`<path class="duct" d="M182,305 C190,330 204,352 220,362" stroke="#4F8A40" stroke-width="3.5" fill="none"/>
+   <path class="duct" d="M262,356 C248,362 236,364 224,364" stroke="#B5891F" stroke-width="3.5" fill="none"/>`;
+  $('#accView').insertAdjacentHTML('afterbegin',bodySVG('acc',{viewBox:'92 222 216 162',pick:true,extra}));
+  const sel=k=>{const a=ACC[k];
+    $('#acc-svg').classList.add('dim');
+    $$('#acc-svg .org').forEach(o=>o.classList.toggle('sel',o.dataset.org===k||(k==='liver'&&o.dataset.org==='gall'&&false)));
+    $$('#accPick button').forEach(b=>b.classList.toggle('sel',b.dataset.org===k));
+    $('#accDetail').innerHTML=`<h3>${a.n}</h3><p>${a.t}</p><span class="juice"><span class="ic">${ic('drop')}</span>${a.j}</span>`;
+  };
+  $$('#accPick button').forEach(b=>b.onclick=()=>sel(b.dataset.org));
+  $$('#acc-svg .pick').forEach(o=>o.addEventListener('click',()=>sel(o.dataset.org)));
+  $('#accDetail').innerHTML=`<h3 style="color:var(--ink)">من يساعد الأمعاء الدقيقة؟</h3><p>ثلاثة أعضاء لا يمرّ بها الطعام، لكن لا يكتمل الهضم بدونها. اختاري عضوًا لتتعرّفي دوره.</p>`;
+}
+
+/* ===== Villi ===== */
+const V={W:520,x0:20,base:205,h:130,n:0,pts:[]};
+function buildVilli(){
+  const svg=$('#vSvg');
+  svg.innerHTML=`<rect x="0" y="0" width="560" height="300" rx="16" fill="#FFF6EC"/>
+   <rect x="10" y="246" width="540" height="34" rx="17" fill="#E4606D"/>
+   <text x="280" y="269" fill="#fff" font-size="17" font-weight="800" text-anchor="middle" font-family="Tajawal">وعاء دموي ينقل الغذاء إلى خلايا الجسم</text>
+   <path id="vFill" fill="#F6B3A6" stroke="#DC7B6C" stroke-width="2.5" stroke-linejoin="round"/>
+   <g id="vCap" fill="none" stroke="#E4606D" stroke-width="2"></g>
+   <path id="vTop" fill="none" stroke="none"/>
+   <g id="vPts"></g>`;
+  const cols=['#F5B52E','#1FA394','#7357A6','#3D7FC1','#EE6352'];
+  let h='';for(let i=0;i<18;i++){const x=40+Math.random()*480,y=24+Math.random()*48;V.pts.push([x,y]);
+    h+=`<circle class="pt wig" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6.5" fill="${cols[i%5]}" style="animation-delay:${(Math.random()*1.4).toFixed(2)}s"/>`}
+  $('#vPts').innerHTML=h;
+  $('#vRange').oninput=e=>drawVilli(+e.target.value);
+  $('#vGo').onclick=absorb;
+  drawVilli(0);
+}
+function drawVilli(n){
+  V.n=n;const {W,x0,base,h}=V;let top=`M${x0},${base}`,cap='';
+  if(n===0)top+=` L${x0+W},${base}`;
+  else{const w=W/n;for(let i=0;i<n;i++){const a=x0+i*w;
+    top+=` L${(a+w*.14).toFixed(1)},${base} C${(a+w*.14).toFixed(1)},${base-h} ${(a+w*.86).toFixed(1)},${base-h} ${(a+w*.86).toFixed(1)},${base} L${(a+w).toFixed(1)},${base}`;
+    cap+=`<path d="M${(a+w*.36).toFixed(1)},${base+4} C${(a+w*.36).toFixed(1)},${base-h+30} ${(a+w*.64).toFixed(1)},${base-h+30} ${(a+w*.64).toFixed(1)},${base+4}"/>`}}
+  $('#vTop').setAttribute('d',top);
+  $('#vFill').setAttribute('d',top+` L${x0+W},${base+40} L${x0},${base+40} Z`);
+  $('#vCap').innerHTML=cap;
+  const r=$('#vTop').getTotalLength()/W;V.r=r;
+  $('#vRatio').textContent='×'+AR(r.toFixed(1).replace(/\.0$/,''));
+  resetPts();
+}
+function resetPts(){$$('#vPts .pt').forEach(p=>{p.style.transform='';p.style.opacity=1;p.classList.add('wig')});$('#vCount').textContent=''}
+function absorb(){
+  resetPts();
+  const pts=$$('#vPts .pt'),k=Math.max(2,Math.min(18,Math.round(18*Math.min(1,V.r/5.5)))),{W,x0,base,h,n}=V;
+  const order=pts.map((p,i)=>i).sort(()=>Math.random()-.5).slice(0,k);
+  setTimeout(()=>{order.forEach((idx,j)=>{const p=pts[idx],[ox,oy]=V.pts[idx];
+    let tx,ty;if(n===0){tx=x0+20+Math.random()*(W-40);ty=base}else{const v=Math.floor(Math.random()*n),w=W/n;tx=x0+v*w+w/2+(Math.random()-.5)*w*.3;ty=base-h+12+Math.random()*(h*.6)}
+    p.classList.remove('wig');
+    setTimeout(()=>{p.style.transform=`translate(${tx-ox}px,${ty-oy}px)`},j*70);
+    setTimeout(()=>{p.style.transform=`translate(${tx-ox}px,${262-oy}px)`},900+j*70);
+    setTimeout(()=>{p.style.transform=`translate(${(tx>280?560:0)-ox}px,${262-oy}px)`;p.style.opacity=0},1800+j*70);
+  });
+  $('#vCount').textContent=`امتُصّ ${AR(k)} جزيئًا من ١٨`+(k===18?' — امتصاص كامل!':'');},50);
+}
+
+/* ===== Order activity ===== */
+const ORD=[['الفم','tooth'],['المريء','eso'],['المعدة','stomach'],['الأمعاء الدقيقة','smallint'],['الأمعاء الغليظة','largeint'],['المستقيم والشرج','exit']];
+let oNext=0;
+function buildOrder(){
+  oNext=0;
+  $('#slots').innerHTML=ORD.map((o,i)=>`<div class="slot"><span class="sn">${AR(i+1)}</span><span class="ic arr">${ic('arrowL')}</span></div>`).join('');
+  const sh=ORD.map((o,i)=>i).sort(()=>Math.random()-.5);
+  $('#ocards').innerHTML=sh.map(i=>`<button class="ocard" data-i="${i}"><span class="ic">${ic(ORD[i][1])}</span>${ORD[i][0]}</button>`).join('');
+  const s=$('#oStatus');s.className='status';s.textContent='اضغطي على المحطة الأولى التي يدخلها الطعام.';
+  $$('.ocard').forEach(c=>c.onclick=()=>{
+    if(+c.dataset.i===oNext){
+      const sl=$('#slots').children[oNext];sl.classList.add('filled');
+      sl.insertAdjacentHTML('beforeend',`<span class="ic">${ic(ORD[oNext][1])}</span><b>${ORD[oNext][0]}</b>`);
+      c.classList.add('used');oNext++;
+      if(oNext===6){s.className='status win';s.innerHTML=`<span class="ic">${ic('trophy')}</span>أحسنتِ! رتّبتِ رحلة اللقمة كاملة بشكل صحيح.`}
+      else s.textContent='صحيح! ما المحطة رقم '+AR(oNext+1)+'؟';
+    }else{c.classList.remove('no');void c.offsetWidth;c.classList.add('no');s.className='status';s.textContent='ليست هذه… فكّري: أين يذهب الطعام بعد «'+(oNext?ORD[oNext-1][0]:'دخوله الجسم')+'»؟'}
+  });
+}
+$('#oReset').onclick=buildOrder;
+
+/* ===== Classify ===== */
+const CLS=[['مضغ الطعام بالأسنان','m'],['تقليب اللسان للطعام','m'],['تقلّصات جدار المعدة تخلط الطعام','m'],['الأميليز يحوّل النشا إلى سكر','c'],['الببسين يحلّل البروتينات','c'],['إنزيمات البنكرياس تكمل الهضم','c']];
+let cSel=null,cDone=0;
+function buildClassify(){
+  cSel=null;cDone=0;
+  const sh=CLS.map((x,i)=>i).sort(()=>Math.random()-.5);
+  $('#pool').innerHTML=sh.map(i=>`<button class="chip" data-i="${i}">${CLS[i][0]}</button>`).join('');
+  $$('.bin-list').forEach(b=>b.innerHTML='');
+  const s=$('#cStatus');s.className='status';s.textContent='اختاري عبارة، ثم اضغطي على الصندوق المناسب.';
+  $$('.chip').forEach(c=>c.onclick=()=>{$$('.chip').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');cSel=c});
+}
+$$('.bin').forEach(b=>b.onclick=()=>{
+  const s=$('#cStatus');
+  if(!cSel){s.className='status';s.textContent='اختاري عبارة أولًا.';return}
+  const it=CLS[+cSel.dataset.i];
+  if(it[1]===b.dataset.bin){
+    b.querySelector('.bin-list').insertAdjacentHTML('beforeend',`<div>${it[0]}</div>`);
+    cSel.remove();cSel=null;cDone++;b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),500);
+    if(cDone===CLS.length){s.className='status win';s.innerHTML=`<span class="ic">${ic('trophy')}</span>ممتاز! صنّفتِ جميع العبارات بشكل صحيح.`}
+    else{s.className='status';s.textContent='إجابة صحيحة! تبقّى '+AR(CLS.length-cDone)+'.'}
+  }else{const c=cSel;c.classList.remove('no');void c.offsetWidth;c.classList.add('no');s.className='status';
+    s.textContent=it[1]==='m'?'تلميح: هل تغيّرت المادة أم تكسّرت فقط؟':'تلميح: هل يوجد إنزيم يحلّل المادة؟'}
+});
+$('#cReset').onclick=buildClassify;
+
+/* ===== Quiz ===== */
+const QZ=[
+ {lv:'k',q:'العضو الذي يبدأ فيه هضم النشويات هو:',o:['المعدة','الفم','الأمعاء الغليظة','المريء'],a:1,e:'يحتوي اللعاب في الفم على إنزيم الأميليز الذي يبدأ هضم النشويات.'},
+ {lv:'k',fig:1,q:'في الشكل المجاور، ما وظيفة العضو الذي يشير إليه السهم؟',o:['امتصاص الماء وتكوين الفضلات','إكمال الهضم وامتصاص الغذاء','نقل الطعام بالحركة الدودية','تخزين العصارة الصفراوية'],a:1,e:'السهم يشير إلى الأمعاء الدقيقة؛ فيها يكتمل الهضم وتمتص الخملات الغذاء.'},
+ {lv:'a',q:'تناولت سارة شطيرة دجاج. أين يبدأ هضم البروتين الموجود في الدجاج؟',o:['الفم','المريء','المعدة','الأمعاء الغليظة'],a:2,e:'يبدأ هضم البروتين في المعدة بفعل إنزيم الببسين في العصارة المعدية.'},
+ {lv:'a',q:'أيّ مما يلي مثال على الهضم الميكانيكي؟',o:['تحويل الأميليز للنشا إلى سكر','تقلّصات جدار المعدة لخلط الطعام','تحليل الببسين للبروتين','عمل إنزيمات البنكرياس'],a:1,e:'تقلّصات المعدة تكسّر الطعام وتخلطه دون تغيير مادته، فهي هضم ميكانيكي.'},
+ {lv:'r',q:'أُزيلت الحوصلة الصفراوية لمريضة، فنصحها الطبيب بالتقليل من نوع معيّن من الطعام. ما هو على الأرجح؟',o:['الأطعمة الدهنية','الخضراوات','الماء','الفواكه'],a:0,e:'الحوصلة تخزّن العصارة الصفراوية التي تساعد على هضم الدهون؛ لذا يصعب هضم الدهون بكميات كبيرة.'},
+ {lv:'r',q:'لماذا يحتوي الجدار الداخلي للأمعاء الدقيقة على ملايين الخملات؟',o:['لتخزين الطعام فترة أطول','لزيادة مساحة سطح الامتصاص','لإفراز حمض الهيدروكلوريك','لدفع الطعام بالحركة الدودية'],a:1,e:'الخملات تزيد مساحة السطح كثيرًا، فيُمتص قدر أكبر من الغذاء المهضوم إلى الدم.'},
+ {lv:'r',q:'يعاني شخص من إسهال (فضلات سائلة) ثم جفاف. أيّ الأعضاء التالية لا يؤدي وظيفته جيدًا؟',o:['المعدة','المريء','الأمعاء الغليظة','الفم'],a:2,e:'الأمعاء الغليظة تمتص الماء من الفضلات؛ وإذا لم تمتصه خرجت الفضلات سائلة وفقد الجسم الماء.'}
+];
+const LV={k:['المعرفة','k'],a:['التطبيق','a'],r:['الاستدلال','r']};
+let Q={i:0,s:0};
+function qFig(){
+  const extra=`<path d="M58,582 L160,486" stroke="#1E3448" stroke-width="7" stroke-linecap="round"/><path d="M146,484 L168,478 L162,500" fill="none" stroke="#1E3448" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>`;
+  return bodySVG('q',{extra});
+}
+function renderQuiz(){
+  const box=$('#quiz');
+  if(Q.i>=QZ.length){
+    const n=QZ.length,st=Q.s>=n?3:Q.s>=n-2?2:Q.s>=n/2?1:0;
+    box.innerHTML=`<div class="qz-res"><span class="ic big">${ic('trophy')}</span><h3>نتيجتك: ${AR(Q.s)} من ${AR(n)}</h3>
+      <div class="stars">${[0,1,2].map(k=>`<span class="ic ${k<st?'on':''}">${ic('star')}</span>`).join('')}</div>
+      <p>${st===3?'رائع! أنتِ جاهزة للتقييم الخارجي.':st>=2?'أداء جميل! راجعي الأسئلة التي أخطأتِ فيها.':'لا بأس، عودي إلى رحلة الطعام وراجعي المحطات ثم أعيدي المحاولة.'}</p>
+      <button class="btn coral big" id="qRe"><span class="ic">${ic('restart')}</span> أعيدي الاختبار</button></div>`;
+    $('#qRe').onclick=()=>{Q={i:0,s:0};renderQuiz()};return;
+  }
+  const q=QZ[Q.i],L='أبجد';
+  box.innerHTML=`<div class="qz-top"><span class="qn">السؤال ${AR(Q.i+1)} من ${AR(QZ.length)}</span><span class="lvl ${LV[q.lv][1]}">${LV[q.lv][0]}</span>
+     <div class="qz-bar"><i style="width:${Q.i/QZ.length*100}%"></i></div><span class="qz-score"><span class="ic">${ic('star')}</span>${AR(Q.s)}</span></div>
+   <div class="qz-main"><div class="qz-text"><p class="qz-q">${q.q}</p>
+     <div class="qz-opts" id="qOpts">${q.o.map((x,k)=>`<button class="qopt" data-k="${k}"><span class="l">${L[k]}</span>${x}</button>`).join('')}</div></div>
+     ${q.fig?`<div class="qz-fig">${qFig()}</div>`:''}</div>
+   <div class="qz-foot"><div class="qz-fb" id="qFb"></div><button class="btn coral" id="qNext" style="visibility:hidden">${Q.i===QZ.length-1?'النتيجة':'السؤال التالي'} <span class="ic">${ic('arrowL')}</span></button></div>`;
+  $$('#qOpts .qopt').forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k,ok=k===q.a,fb=$('#qFb');
+    $('#qOpts').classList.add('qopts-lock');
+    b.classList.add(ok?'ok':'no');$$('#qOpts .qopt')[q.a].classList.add('ok');
+    if(ok)Q.s++;
+    fb.className='qz-fb show '+(ok?'ok':'no');
+    fb.innerHTML=`<span class="ic">${ic(ok?'check':'cross')}</span><div><b>${ok?'إجابة صحيحة!':'الإجابة الصحيحة: '+q.o[q.a]}</b><br>${q.e}</div>`;
+    $('#qNext').style.visibility='visible';
+  });
+  $('#qNext').onclick=()=>{Q.i++;renderQuiz()};
+}
+
+/* ===== Habits ===== */
+const HB=[
+ ['tooth','امضغي طعامك جيدًا','تمهّلي في الأكل','يسهّل الهضم الميكانيكي ويمنح اللعاب وقتًا ليبدأ الهضم الكيميائي.','#7357A6','#ECE6F7'],
+ ['glass','اشربي الماء','٦–٨ أكواب يوميًا','يساعد الماء على تليين الفضلات وتسهيل حركتها في الأمعاء الغليظة.','#3D7FC1','#DCEBFA'],
+ ['apple','أكثري من الألياف','خضار وفواكه وحبوب كاملة','الألياف تنشّط حركة الأمعاء وتمنع الإمساك.','#EE6352','#FDE4DF'],
+ ['run','تحرّكي كل يوم','نشاط بدني منتظم','الحركة تنشّط عضلات القناة الهضمية وتحسّن عملها.','#1FA394','#D9F3EF']
+];
+function buildHabits(){
+  $('#habits').innerHTML=HB.map(h=>`<div class="flip"><div class="face front"><span class="ic" style="color:${h[4]};--tint:${h[5]}">${ic(h[0])}</span><b>${h[1]}</b><small>${h[2]}</small></div>
+    <div class="face back" style="background:${h[4]}"><span class="ic" style="color:#fff">${ic('bulb')}</span><p>${h[3]}</p></div></div>`).join('');
+  $$('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+}
+
+/* ===== Summary flow ===== */
+function buildFlow(){
+  const sub=['هضم ميكانيكي وكيميائي','نقل بالحركة الدودية','بداية هضم البروتين','اكتمال الهضم والامتصاص','امتصاص الماء','إخراج الفضلات'];
+  $('#flow').innerHTML=ORD.map((o,i)=>`<div class="fl"><span class="ic">${ic(o[1])}</span><b>${o[0]}</b><small>${sub[i]}</small></div>`+(i<5?`<span class="ic fl-ar">${ic('arrowL')}</span>`:'')).join('');
+}
+
+/* ===== Init ===== */
+paintIcons();fit();buildCover();buildHook();buildJourney();buildAcc();buildVilli();buildOrder();buildClassify();renderQuiz();buildHabits();buildFlow();go(0);
+</script>
+</body>
+</html>
